@@ -210,7 +210,33 @@ function toggleDescription(){
     }
 }
 </script>
+<script>
+async function updateCounter(type) {
+    let response = await fetch('data.json');
+    let data = await response.json();
+
+    if(type === "view") data.views++;
+    if(type === "download") data.downloads++;
+
+    // Show live counts
+    document.getElementById("viewCount").innerText = data.views;
+    document.getElementById("downloadCount").innerText = data.downloads;
+
+    // ⚠️ Saving back to file requires a server
+    // On GitHub Pages, JS can't overwrite JSON
+    // → need server or API to handle saving
+}
+
+// Count view when page loads
+updateCounter("view");
+
+// Count download when clicked
+document.getElementById("downloadBtn").addEventListener("click", ()=>{
+    updateCounter("download");
+});
+</script>
 
 </body>
 </html>
+
 
