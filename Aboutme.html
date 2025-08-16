@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Me - Murphy</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: "Consolas", "Segoe UI", monospace;
+        background: #000;
+        color: #e0e0e0;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    canvas#bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .center-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 900px;
+        padding: 2rem;
+        border-radius: 4px;
+        background: rgba(20, 20, 20, 0.95);
+        text-align: left;
+        display: flex;
+        gap: 1.5rem;
+        box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    }
+
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 2px solid #fff;
+        flex-shrink: 0;
+    }
+
+    .profile-pic img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none; /* makes it non-clickable */
+    }
+
+    .profile-info {
+        flex: 1;
+    }
+
+    .profile-info h1 {
+        margin: 0 0 0.5rem 0;
+        color: #ff7e05;
+        font-size: 2rem;
+    }
+
+    .profile-info p {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 12px;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .social-links a {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 6px 10px;
+        border-radius: 4px;
+        background-color: rgba(0,0,0,0.6);
+        color: #fff;
+        transition: background 0.2s;
+    }
+
+    .social-links a:hover {
+        background-color: rgba(255,255,255,0.15);
+    }
+
+    .social-links img {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<div class="center-box">
+    <div class="profile-pic">
+        <img src="https://scontent.fkch2-1.fna.fbcdn.net/v/t39.30808-6/474219643_2049407882174337_7418413474377547885_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=107&ccb=1-7&_nc_sid=fe5ecc&_nc_ohc=zdd35_lvhFUQ7kNvwFGBAoC&_nc_oc=AdndG-zJKkb7Ws_rHKBfNkNighNI2INhZjoao9XOk9WYAh-dnocpSpVboJYpkSWb9rw&_nc_zt=23&_nc_ht=scontent.fkch2-1.fna&_nc_gid=-ALOZKr0ovSFVkaw-ETTtw&oh=00_AfVDYbq-xhXzurvkUl7WunyaVWy4h4CzQ32ZMzmmGxpZwA&oe=68A61CBE" alt="Profile Pic">
+    </div>
+    <div class="profile-info">
+        <h1>Murphy A.K.A "Mufi / Mapi"</h1>
+        <p>Hi! I'm Murphy, a boy who loves random things.</p>
+
+        <div class="social-links">
+            <a href="https://www.youtube.com/@murphyuhls" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">YouTube
+            </a>
+            <a href="https://www.tiktok.com/@murphyuhls" target="_blank">
+                <img src="https://static.wikia.nocookie.net/tiktok/images/e/eb/TikTok_Logo.png" alt="TikTok">TikTok
+            </a>
+            <a href="https://www.instagram.com/pathobscure" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">Instagram
+            </a>
+            <a href="https://steamcommunity.com/id/mupyls/" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam">Steam
+            </a>
+            <a href="https://github.com/Azurou" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/2048px-Github-desktop-logo-symbol.svg.png" alt="Github">Github
+            </a>
+            <a href="https://www.deviantart.com/ovadragoz/" target="_blank">
+                <img src="https://m.media-amazon.com/images/I/A19BO+c5nIL.png" alt="Deviantart">Deviantart
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+let balls = [];
+for (let i = 0; i < 20; i++) {
+    balls.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        dx: (Math.random() - 0.5) * 2,
+        dy: (Math.random() - 0.5) * 2,
+        size: 12 + Math.random() * 18
+    });
+}
+
+function draw() {
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    balls.forEach(b => {
+        b.x += b.dx;
+        b.y += b.dy;
+        if (b.x < 0 || b.x > canvas.width) b.dx *= -1;
+        if (b.y < 0 || b.y > canvas.height) b.dy *= -1;
+
+        ctx.strokeStyle = "#fff";
+        ctx.beginPath();
+        for (let i = 0; i < 6; i++) {
+            let angle = (i / 6) * Math.PI * 2;
+            ctx.lineTo(b.x + Math.cos(angle) * b.size, b.y + Math.sin(angle) * b.size);
+        }
+        ctx.closePath();
+        ctx.stroke();
+    });
+
+    requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+</body>
+</html>
