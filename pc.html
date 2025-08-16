@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PC Download - Murphy</title>
+<style>
+html, body {
+    margin:0; padding:0; height:100%;
+    font-family:"Consolas","Segoe UI",monospace;
+    background:#000; color:#e0e0e0;
+}
+.top-nav {
+    position:fixed; top:0; width:100%;
+    background:rgba(40,40,40,0.9);
+    display:flex; justify-content:center; gap:2rem;
+    padding:1rem 0; z-index:10;
+}
+.top-nav a {
+    color:#fff; text-decoration:none;
+    font-weight:bold; font-size:1.1rem;
+    transition:0.2s;
+}
+.top-nav a:hover { color:#ff7e05; cursor:pointer; }
+.page {
+    padding:100px 20px;
+    max-width:800px;
+    margin:auto;
+    line-height:1.6;
+}
+.page h2 { color:#ff7e05; }
+.download-box {
+    background:rgba(30,30,30,0.9);
+    border:1px solid #444;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(255,126,5,0.5);
+    position:relative;
+}
+.download-stats {
+    margin-top:10px;
+    font-size:0.9rem;
+    color:#aaa;
+}
+.download-btn {
+    position:absolute;
+    bottom:15px; right:15px;
+    display:flex; align-items:center; gap:6px;
+    padding:8px 10px;   /* smaller button */
+    background:#ff7e05;
+    color:#000;
+    font-weight:bold;
+    text-decoration:none;
+    border-radius:2px;
+    font-size:0.85rem; /* smaller text */
+    transition:0.2s;
+}
+.download-btn img {
+    height:11px; width:20px; /* smaller logo */
+}
+.download-btn:hover {
+    background:#ffa64d;
+    color:#111;
+}
+
+/* Drop-down description */
+.toggle-header {
+    cursor:pointer;
+    font-weight:bold;
+    margin:10px 0;
+    padding:8px;
+    border:1px solid #555;
+    border-radius:5px;
+    background:#111;
+    color:#ff7e05;
+    user-select:none;
+}
+.toggle-header:hover { background:#222; }
+.toggle-content {
+    display:none;
+    margin-top:10px;
+    animation:fadeIn 0.3s;
+}
+@keyframes fadeIn {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
+.popup {
+    position:fixed; top:50px; left:50%;
+    transform:translateX(-50%);
+    background:rgba(30,30,30,0.95);
+    padding:20px; border-radius:8px;
+    box-shadow:0 0 20px rgba(255,255,255,0.3);
+    display:none; z-index:20; color:#fff;
+}
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<div class="top-nav">
+    <a href="index.html">Home</a>
+    <a href="PC.html">Download (PC)</a>
+    <a href="#" id="mainMenuBtn">Main Menu</a>
+    <a href="#" id="feedbackBtn">Feedback</a>
+    <a href="#" id="donateBtn">Donate</a>
+</div>
+
+<!-- PC Download Page -->
+<div class="page">
+    <h2>🔥 PromptYT Downloader (Windows Only) 🔥</h2>
+    <div class="download-box">
+        <p><strong>PromptYTDownloader_by_Ovadragoz.zip (366MB)</strong> — <em>Latest Patched</em></p>
+
+        <div class="toggle-header" onclick="toggleDescription()">▼ Show Description</div>
+        <div class="toggle-content" id="descBox">
+            <p>Get the <strong>latest PromptYT Downloader</strong> for Windows — easy to use,  
+            fast downloads, and works for both video and audio!</p>
+
+            <h3>✨ Featured:</h3>
+            <ul>
+                <li>✅ Supports multiple formats (MP4, MP3, FLAC)</li>
+                <li>✅ Simple click-and-go HTML interface</li>
+                <li>✅ Works offline after setup</li>
+                <li>✅ Includes step-by-step guide for beginners</li>
+            </ul>
+
+            <h3>⚡ How it works:</h3>
+            <ol>
+                <li>Extract the zip file to your <strong>C:</strong> drive.</li>
+                <li>Open <code>PromptYT_Guide_By_Ovadragoz.html</code> inside the folder.</li>
+                <li>Paste a YouTube link and select your option.</li>
+            </ol>
+
+            <h3>🎯 Used For:</h3>
+            <ul>
+                <li>✅ Downloading YouTube videos for offline use</li>
+                <li>✅ Extracting audio tracks from YouTube</li>
+                <li>✅ Saving English subtitles</li>
+                <li>✅ Custom file naming + folder saving</li>
+            </ul>
+
+            <p><strong>📦 File Size:</strong> ~366MB</p>
+            <p><strong>💻 Platform:</strong> Windows Only</p>
+        </div>
+
+        <div class="download-stats">
+            👁 Views: <span id="viewCount">0</span> | ⬇ Downloads: <span id="downloadCount">0</span>
+        </div>
+
+        <!-- Local image + smaller button -->
+        <a class="download-btn" href="https://mega.nz/file/7VcG3Aqa#krc4ZctaoAY2fI5PdPoMMjnEiXNDath4S7jggepFdVo" target="_blank" id="downloadLink">
+            <img src="mega.png" alt="MEGA"> Download
+        </a>
+    </div>
+</div>
+
+<!-- Popups -->
+<div class="popup" id="mainMenuPopup"><p>Coming soon...</p></div>
+<div class="popup" id="feedbackPopup"><p>Send feedback to: <strong>murphy_uh123@yahoo.com</strong></p></div>
+<div class="popup" id="donatePopup"><p>Paypal: <strong>ovadragoz@gmail.com</strong></p></div>
+
+<script>
+// ---- Device ID Generator ----
+function generateDeviceID() {
+    return btoa(navigator.userAgent + screen.width + "x" + screen.height);
+}
+const deviceID = generateDeviceID();
+
+// ---- Fake Counter using LocalStorage ----
+let views = localStorage.getItem("views_"+deviceID) ? parseInt(localStorage.getItem("views_"+deviceID)) : 0;
+let downloads = localStorage.getItem("downloads_"+deviceID) ? parseInt(localStorage.getItem("downloads_"+deviceID)) : 0;
+
+if(views < 1){
+    views++;
+    localStorage.setItem("views_"+deviceID, views);
+}
+
+// Show counters
+document.addEventListener("DOMContentLoaded", ()=>{
+    document.getElementById("viewCount").innerText = views;
+    document.getElementById("downloadCount").innerText = downloads;
+
+    document.getElementById("downloadLink").addEventListener("click", ()=>{
+        downloads++;
+        localStorage.setItem("downloads_"+deviceID, downloads);
+        document.getElementById("downloadCount").innerText = downloads;
+    });
+});
+
+// Popup toggle
+function togglePopup(id){
+    const p=document.getElementById(id);
+    p.style.display = (p.style.display==='block') ? 'none' : 'block';
+}
+document.getElementById('mainMenuBtn').addEventListener('click', e=>{ e.preventDefault(); togglePopup('mainMenuPopup'); });
+document.getElementById('feedbackBtn').addEventListener('click', e=>{ e.preventDefault(); togglePopup('feedbackPopup'); });
+document.getElementById('donateBtn').addEventListener('click', e=>{ e.preventDefault(); togglePopup('donatePopup'); });
+
+// Drop description toggle
+function toggleDescription(){
+    const box = document.getElementById("descBox");
+    const header = document.querySelector(".toggle-header");
+    if(box.style.display === "block"){
+        box.style.display = "none";
+        header.innerHTML = "▼ Show Description";
+    } else {
+        box.style.display = "block";
+        header.innerHTML = "▲ Hide Description";
+    }
+}
+</script>
+
+</body>
+</html>
