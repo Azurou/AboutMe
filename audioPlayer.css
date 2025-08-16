@@ -1,0 +1,31 @@
+#audioPlayer {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 20;
+    background: rgba(40, 40, 40, 0.8);
+    border-radius: 4px;
+    padding: 5px;
+}
+
+#audioControls {
+    position: fixed;
+    bottom: 50px; /* above the player */
+    left: 10px;
+    z-index: 20;
+    display: flex;
+    gap: 5px;
+}
+
+#audioControls button {
+    background: rgba(40,40,40,0.8);
+    color: #fff;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#audioControls button:hover {
+    background: rgba(255,126,5,0.8);
+}
