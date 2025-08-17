@@ -4,149 +4,93 @@
 <meta charset="UTF-8">
 <title>About Me - Murphy</title>
 <style>
-/* Reset & Body */
 html, body {
-    margin:0;
-    padding:0;
-    height:100%;
-    overflow:hidden;
+    margin:0; padding:0; height:100%; overflow:hidden;
     font-family:"Consolas","Segoe UI",monospace;
-    background:#000;
-    color:#e0e0e0;
+    background:#000; color:#e0e0e0;
 }
-
-/* Background */
 #bgGif {
-    position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    object-fit:cover;
+    position:fixed; top:0; left:0;
+    width:100%; height:100%; object-fit:cover;
     z-index:-10;
 }
 canvas#bg {
     position:fixed; top:0; left:0;
     width:100%; height:100%;
-    z-index:-5;
-    pointer-events:none;
+    z-index:-5; pointer-events:none;
 }
-
-/* Top Navigation */
 .top-nav {
-    position:fixed;
-    top:0;
-    width:100%;
+    position:fixed; top:0; width:100%;
     background:rgba(40,40,40,0.9);
-    display:flex;
-    justify-content:center;
-    gap:2rem;
-    padding:1rem 0;
-    z-index:10;
+    display:flex; justify-content:center; gap:2rem;
+    padding:1rem 0; z-index:10;
 }
 .top-nav a {
-    color:#fff;
-    text-decoration:none;
-    font-weight:bold;
-    font-size:1.1rem;
-    transition:0.2s;
+    color:#fff; text-decoration:none; font-weight:bold;
+    font-size:1.1rem; transition:0.2s;
 }
-.top-nav a:hover {
-    color:#ff7e05;
-    cursor:pointer;
-}
-
-/* Dropdown */
+.top-nav a:hover { color:#ff7e05; cursor:pointer; }
 .nav-item { position:relative; }
 .nav-item .dropdown {
-    display:none;
-    position:absolute;
-    top:2rem;
-    left:0;
-    background:rgba(50,50,50,0.95);
-    border-radius:6px;
-    padding:6px 0;
-    min-width:120px;
-    z-index:15;
+    display:none; position:absolute; top:2rem; left:0;
+    background:rgba(50,50,50,0.95); border-radius:6px;
+    padding:6px 0; min-width:120px; z-index:15;
 }
 .nav-item .dropdown a {
-    display:block;
-    padding:6px 12px;
-    color:#fff;
-    text-decoration:none;
-    font-weight:bold;
+    display:block; padding:6px 12px; color:#fff;
+    text-decoration:none; font-weight:bold;
 }
 .nav-item .dropdown a:hover { background:rgba(255,126,5,0.2); }
-
-/* Profile Section */
 .profile-container {
-    position:fixed;
-    top:80px; left:50px;
-    display:flex;
-    gap:20px;
-    align-items:flex-start;
-    z-index:5;
+    position:fixed; top:80px; left:50px;
+    display:flex; gap:20px; align-items:flex-start; z-index:5;
 }
 .profile-pic { 
-    width:150px; height:150px;
-    border-radius:8px;
-    overflow:hidden;
-    border:2px solid #fff;
-    flex-shrink:0;
+    width:150px; height:150px; border-radius:8px;
+    overflow:hidden; border:2px solid #fff; flex-shrink:0;
 }
 .profile-pic img { width:100%; height:100%; object-fit:cover; }
 .name-box h1 { margin:0; color:#ff7e05; font-size:2rem; }
 .bio-box { margin-top:8px; font-size:1rem; }
 .social-links { display:flex; flex-wrap:wrap; gap:12px; margin-top:12px; }
 .social-links a {
-    display:flex;
-    align-items:center;
-    gap:6px;
-    padding:6px 10px;
-    background:rgba(0,0,0,0.6);
-    color:#fff;
-    text-decoration:none;
-    font-weight:bold;
-    border-radius:4px;
-    transition:0.2s;
+    display:flex; align-items:center; gap:6px;
+    padding:6px 10px; background:rgba(0,0,0,0.6);
+    color:#fff; text-decoration:none; font-weight:bold;
+    border-radius:4px; transition:0.2s;
 }
 .social-links a:hover { background:rgba(255,255,255,0.15); }
 .social-links img { width:20px; height:20px; }
-
-/* Popup Boxes */
 .popup {
-    position:fixed;
-    top:50px; left:50%;
+    position:fixed; top:50px; left:50%;
     transform:translateX(-50%);
-    background:rgba(30,30,30,0.95);
-    padding:20px;
-    border-radius:8px;
-    box-shadow:0 0 20px rgba(255,255,255,0.3);
-    display:none;
-    z-index:20;
+    background:rgba(30,30,30,0.95); padding:20px;
+    border-radius:8px; box-shadow:0 0 20px rgba(255,255,255,0.3);
+    display:none; z-index:20;
 }
 .popup h2 { margin-top:0; color:#ff7e05; }
 .popup p { margin:6px 0; font-size:1rem; }
-.popup input, .popup textarea { width:100%; padding:6px; margin:6px 0; border-radius:4px; border:none; }
-.popup button { padding:6px 12px; margin-top:8px; background:#ff7e05; border:none; color:#fff; cursor:pointer; border-radius:4px; }
-
-/* Music Player */
-#musicPlayer {
-    position:fixed;
-    bottom:0; left:0;
-    width:100%;
-    background:rgba(30,30,30,0.95);
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:10px 20px;
-    box-shadow:0 -2px 10px rgba(0,0,0,0.5);
-    z-index:50;
+.popup input, .popup textarea {
+    width:100%; padding:6px; margin:6px 0;
+    border-radius:4px; border:none;
 }
-#musicPlayer button { background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer; }
-#progressContainer { flex:1; height:6px; background:rgba(255,255,255,0.2); border-radius:3px; overflow:hidden; cursor:pointer; }
-#progress { width:0%; height:100%; background:#ff7e05; }
-#time { min-width:40px; text-align:right; font-size:0.9rem; }
-.volume-wrapper { width:120px; padding:0 50px; }
-#volumeControl { width:100%; }
+.popup button {
+    padding:6px 12px; margin-top:8px;
+    background:#ff7e05; border:none; color:#fff;
+    cursor:pointer; border-radius:4px;
+}
+/* Mute Button */
+#muteBtn {
+    position:fixed; bottom:20px; right:30px;
+    background:rgba(30,30,30,0.95);
+    border:none; color:#fff; font-size:1.7rem;
+    border-radius:50%; width:48px; height:48px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.5);
+    cursor:pointer; z-index:100;
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.2s;
+}
+#muteBtn:hover { background:rgba(255,126,5,0.8); }
 </style>
 </head>
 <body>
@@ -183,12 +127,12 @@ canvas#bg {
             <p>Hi! I'm Murphy, a boy who loves random things.</p>
         </div>
         <div class="social-links">
-            <a href="https://www.youtube.com/@murphyuhls" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png">YouTube</a>
-            <a href="https://www.tiktok.com/@murphyuhls" target="_blank"><img src="https://static.wikia.nocookie.net/tiktok/images/e/eb/TikTok_Logo.png">TikTok</a>
-            <a href="https://www.instagram.com/pathobscure" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">Instagram</a>
-            <a href="https://steamcommunity.com/id/mupyls/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg">Steam</a>
-            <a href="https://github.com/Azurou" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/2048px-Github-desktop-logo-symbol.svg.png">Github</a>
-            <a href="https://www.deviantart.com/ovadragoz/" target="_blank"><img src="https://m.media-amazon.com/images/I/A19BO+c5nIL.png">Deviantart</a>
+            <a href="https://www.youtube.com/@murphyuhls" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">YouTube</a>
+            <a href="https://www.tiktok.com/@murphyuhls" target="_blank"><img src="https://static.wikia.nocookie.net/tiktok/images/e/eb/TikTok_Logo.png" alt="TikTok">TikTok</a>
+            <a href="https://www.instagram.com/pathobscure" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">Instagram</a>
+            <a href="https://steamcommunity.com/id/mupyls/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam">Steam</a>
+            <a href="https://github.com/Azurou" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/2048px-Github-desktop-logo-symbol.svg.png" alt="Github">Github</a>
+            <a href="https://www.deviantart.com/ovadragoz/" target="_blank"><img src="https://m.media-amazon.com/images/I/A19BO+c5nIL.png" alt="Deviantart">Deviantart</a>
         </div>
     </div>
 </div>
@@ -197,7 +141,6 @@ canvas#bg {
 <div class="popup" id="mainMenuPopup">
     <p>Coming soon...</p>
 </div>
-
 <div class="popup" id="feedbackPopup">
     <p>Send a email to <strong>murphy_uh123@yahoo.com</strong> for feedback</p>
     <form action="mailto:murphy_uh123@yahoo.com" method="post" enctype="text/plain" target="_blank">
@@ -207,114 +150,116 @@ canvas#bg {
         <button type="submit">Send</button>
     </form>
 </div>
-
 <div class="popup" id="donatePopup">
     <p>Paypal: <strong>ovadragoz@gmail.com</strong></p>
 </div>
 
-<!-- Music Player -->
-<div id="musicPlayer">
-    <button id="playPause">▶️</button>
-    <div id="progressContainer"><div id="progress"></div></div>
-    <span id="time">0:00</span>
-    <div class="volume-wrapper">
-        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
-    </div>
-</div>
-<audio id="bgMusic" src="8bitodoriko.mp3"></audio>
+<!-- Mute/Unmute Button -->
+<button id="muteBtn" title="Mute/Unmute Music">🔊</button>
+<audio id="bgMusic" src="8bitodoriko.mp3" loop></audio>
 
 <script>
 // Canvas background animation
-const canvas=document.getElementById('bg');
-const ctx=canvas.getContext('2d');
-function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-window.addEventListener('resize',resizeCanvas); resizeCanvas();
-
-let balls=[];
-for(let i=0;i<40;i++){
-    balls.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height,
-        dx:(Math.random()-0.5)*2.5, dy:(Math.random()-0.5)*2.5, size:10+Math.random()*25 });
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
-function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    balls.forEach(b=>{
-        b.x+=b.dx; b.y+=b.dy;
-        if(b.x<0||b.x>canvas.width) b.dx*=-1;
-        if(b.y<0||b.y>canvas.height) b.dy*=-1;
-        ctx.strokeStyle='rgba(255,255,255,0.8)';
-        ctx.shadowColor='rgba(255,126,5,0.7)';
-        ctx.shadowBlur=10;
+window.addEventListener('resize', resizeCanvas); resizeCanvas();
+
+let balls = [];
+for (let i = 0; i < 40; i++) {
+    balls.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        dx: (Math.random() - 0.5) * 2.5,
+        dy: (Math.random() - 0.5) * 2.5,
+        size: 10 + Math.random() * 25
+    });
+}
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    balls.forEach(b => {
+        b.x += b.dx; b.y += b.dy;
+        if (b.x < 0 || b.x > canvas.width) b.dx *= -1;
+        if (b.y < 0 || b.y > canvas.height) b.dy *= -1;
+        ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+        ctx.shadowColor = 'rgba(255,126,5,0.7)';
+        ctx.shadowBlur = 10;
         ctx.beginPath();
-        for(let i=0;i<6;i++){
-            let angle=(i/6)*Math.PI*2;
-            let x=b.x+Math.cos(angle)*b.size;
-            let y=b.y+Math.sin(angle)*b.size;
-            i===0? ctx.moveTo(x,y): ctx.lineTo(x,y);
+        for (let i = 0; i < 6; i++) {
+            let angle = (i / 6) * Math.PI * 2;
+            let x = b.x + Math.cos(angle) * b.size;
+            let y = b.y + Math.sin(angle) * b.size;
+            i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
         ctx.closePath();
         ctx.stroke();
-        ctx.shadowBlur=0;
+        ctx.shadowBlur = 0;
     });
     requestAnimationFrame(draw);
 }
 draw();
 
-// Music Player
-const audio=document.getElementById('bgMusic');
-const playBtn=document.getElementById('playPause');
-const progress=document.getElementById('progress');
-const timeDisplay=document.getElementById('time');
-const volumeControl=document.getElementById('volumeControl');
-playBtn.addEventListener('click',()=>{
-    if(audio.paused){ audio.play(); playBtn.textContent='⏸️'; } 
-    else { audio.pause(); playBtn.textContent='▶️'; }
-});
-audio.addEventListener('timeupdate',()=>{
-    if(audio.duration>0){
-        progress.style.width=(audio.currentTime/audio.duration*100)+'%';
-        let m=Math.floor(audio.currentTime/60),s=Math.floor(audio.currentTime%60);
-        if(s<10)s='0'+s;
-        timeDisplay.textContent=`${m}:${s}`;
-    }
-});
-document.getElementById('progressContainer').addEventListener('click',(e)=>{
-    const rect=e.currentTarget.getBoundingClientRect();
-    audio.currentTime=(e.clientX-rect.left)/rect.width*audio.duration;
-});
-volumeControl.addEventListener('input',e=>{ audio.volume=e.target.value; });
-
 // Dropdown Menu
-document.querySelectorAll('.nav-item').forEach(item=>{
-    item.querySelector('.nav-link').addEventListener('click',e=>{
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.querySelector('.nav-link').addEventListener('click', e => {
         e.preventDefault();
-        const dropdown=item.querySelector('.dropdown');
-        dropdown.style.display = dropdown.style.display==='block'?'none':'block';
-        document.querySelectorAll('.dropdown').forEach(d=>{if(d!==dropdown)d.style.display='none';});
+        const dropdown = item.querySelector('.dropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        document.querySelectorAll('.dropdown').forEach(d => { if (d !== dropdown) d.style.display = 'none'; });
     });
 });
-document.addEventListener('click',e=>{ if(!e.target.closest('.nav-item')) document.querySelectorAll('.dropdown').forEach(d=>d.style.display='none'); });
+document.addEventListener('click', e => {
+    if (!e.target.closest('.nav-item')) document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
+});
 
 // Popup Handlers
-function showPopup(popupId, duration=null){
-    const popup=document.getElementById(popupId);
-    popup.style.display='block';
-    if(duration) setTimeout(()=>popup.style.display='none',duration);
+function showPopup(popupId, duration = null) {
+    const popup = document.getElementById(popupId);
+    popup.style.display = 'block';
+    if (duration) setTimeout(() => popup.style.display = 'none', duration);
 }
-document.getElementById('mainMenuBtn').addEventListener('click',e=>{
+document.getElementById('mainMenuBtn').addEventListener('click', e => {
     e.preventDefault();
-    showPopup('mainMenuPopup',2000);
+    showPopup('mainMenuPopup', 2000);
 });
-document.getElementById('feedbackBtn').addEventListener('click',e=>{
+document.getElementById('feedbackBtn').addEventListener('click', e => {
     e.preventDefault();
-    const popup=document.getElementById('feedbackPopup');
-    popup.style.display = popup.style.display==='block'?'none':'block';
+    const popup = document.getElementById('feedbackPopup');
+    popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
 });
-document.getElementById('donateBtn').addEventListener('click',e=>{
+document.getElementById('donateBtn').addEventListener('click', e => {
     e.preventDefault();
-    const popup=document.getElementById('donatePopup');
-    popup.style.display = popup.style.display==='block'?'none':'block';
+    const popup = document.getElementById('donatePopup');
+    popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+});
+
+// Background Music: autoplay, 30% volume, mute/unmute only
+const audio = document.getElementById('bgMusic');
+const muteBtn = document.getElementById('muteBtn');
+audio.volume = 0.3;
+audio.muted = false;
+
+// Try to autoplay (may require user gesture on some browsers)
+function tryPlay() {
+    audio.play().catch(() => {
+        // If autoplay fails, wait for user interaction
+        document.body.addEventListener('click', () => {
+            audio.play();
+        }, { once: true });
+    });
+}
+tryPlay();
+
+muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+});
+audio.addEventListener('volumechange', () => {
+    muteBtn.textContent = audio.muted ? '🔇' : '🔊';
 });
 </script>
 </body>
 </html>
-
