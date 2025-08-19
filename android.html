@@ -7,15 +7,6 @@
 <style>
 html, body {
     margin: 0; padding: 0; height: 100%;
-    font-family: "Consolas","Segoe UI",monospace;<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Android Download - Murphy</title>
-<style>
-html, body {
-    margin: 0; padding: 0; height: 100%;
     font-family: "Consolas","Segoe UI",monospace;
     background: #000; color: #e0e0e0;
 }
@@ -172,80 +163,5 @@ document.querySelector('.dropbtn').addEventListener('click', function(e) {
     });
 });
 </script>
-</body>
-</html>
-    background: #000; color: #e0e0e0;
-}
-.top-nav {
-    position: fixed; top: 0; width: 100%;
-    background: rgba(40,40,40,0.9);
-    display: flex; justify-content: center; gap: 2rem;
-    padding: 1rem 0; z-index: 10;
-}
-.top-nav a {
-    color: #fff; text-decoration: none;
-    font-weight: bold; font-size: 1.1rem;
-    transition: 0.2s;
-}
-.top-nav a:hover { color: #ff7e05; cursor: pointer; }
-.page {
-    padding: 100px 20px 40px 20px;
-    max-width: 800px;
-    margin: auto;
-    line-height: 1.6;
-}
-.page h2 { color: #ff7e05; }
-.box-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 120px);
-    gap: 1.5rem;
-    justify-items: center;
-    align-items: center;
-    margin: 3rem auto 0 auto;
-    max-width: 500px;
-}
-.blank-box {
-    width: 100px; height: 100px;
-    background: rgba(30,30,30,0.85);
-    border: 2px dashed #444;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2.2rem; color: #ff7e05;
-    transition: border 0.2s;
-}
-.blank-box:hover {
-    border: 2px solid #ff7e05; background:rgba(50,50,50,0.85);
-}
-@media (max-width: 600px) {
-    .box-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: repeat(3, 100px);
-        max-width: 350px;
-    }
-}
-</style>
-</head>
-<body>
-<!-- Top Navigation -->
-<div class="top-nav">
-    <a href="index.html">Home</a>
-    <a href="PC.html">Download (PC)</a>
-    <a href="#">Main Menu</a>
-    <a href="#">Feedback</a>
-    <a href="#">Donate</a>
-</div>
-
-<div class="page">
-    <h2>📱 Android Page</h2>
-    <div class="box-grid">
-        <div class="blank-box"></div>
-        <div class="blank-box"></div>
-        <div class="blank-box"></div>
-        <div class="blank-box"></div>
-        <div class="blank-box"></div>
-        <div class="blank-box"></div>
-    </div>
-</div>
 </body>
 </html>
