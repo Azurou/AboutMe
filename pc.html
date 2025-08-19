@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PC Download - Murphy</title>
+<title>Download - Murphy</title>
 <style>
 html, body {
     margin:0; padding:0; height:100%;
@@ -15,12 +15,53 @@ html, body {
     display:flex; justify-content:center; gap:2rem;
     padding:1rem 0; z-index:10;
 }
-.top-nav a {
+.top-nav a, .top-nav .dropbtn {
     color:#fff; text-decoration:none;
     font-weight:bold; font-size:1.1rem;
     transition:0.2s;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    margin:0;
+    font-family:inherit;
 }
-.top-nav a:hover { color:#ff7e05; cursor:pointer; }
+.top-nav a:hover, .top-nav .dropbtn:hover { color:#ff7e05; }
+.top-nav .dropdown {
+    position:relative;
+    display:inline-block;
+}
+.top-nav .dropdown-content {
+    display:none;
+    position:absolute;
+    top:2.8rem;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(40,40,40,0.98);
+    min-width:120px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
+    border-radius:5px;
+    z-index:100;
+    flex-direction:column;
+}
+.top-nav .dropdown-content a {
+    color:#fff;
+    padding:10px 18px;
+    text-decoration:none;
+    display:block;
+    font-size:1rem;
+    white-space:nowrap;
+    transition:background 0.15s;
+}
+.top-nav .dropdown-content a:hover {
+    background:#222;
+    color:#ff7e05;
+}
+.top-nav .dropdown:hover .dropdown-content,
+.top-nav .dropdown:focus-within .dropdown-content {
+    display:flex;
+}
+
 .page {
     padding:100px 20px;
     max-width:800px;
@@ -45,24 +86,22 @@ html, body {
     position:absolute;
     bottom:15px; right:15px;
     display:flex; align-items:center; gap:6px;
-    padding:8px 10px;   /* smaller button */
+    padding:8px 10px;
     background:#ff7e05;
     color:#000;
     font-weight:bold;
     text-decoration:none;
     border-radius:2px;
-    font-size:0.85rem; /* smaller text */
+    font-size:0.85rem;
     transition:0.2s;
 }
 .download-btn img {
-    height:11px; width:20px; /* smaller logo */
+    height:11px; width:20px;
 }
 .download-btn:hover {
     background:#ffa64d;
     color:#111;
 }
-
-/* Drop-down description */
 .toggle-header {
     cursor:pointer;
     font-weight:bold;
@@ -84,7 +123,6 @@ html, body {
     from { opacity:0; }
     to { opacity:1; }
 }
-
 .popup {
     position:fixed; top:50px; left:50%;
     transform:translateX(-50%);
@@ -100,38 +138,39 @@ html, body {
 <!-- Top Navigation -->
 <div class="top-nav">
     <a href="index.html">Home</a>
-    <a href="PC.html">Download (PC)</a>
+    <div class="dropdown">
+        <button class="dropbtn">Download ▾</button>
+        <div class="dropdown-content">
+            <a href="pc.html">PC</a>
+            <a href="android.html">Android</a>
+        </div>
+    </div>
     <a href="#" id="mainMenuBtn">Main Menu</a>
     <a href="#" id="feedbackBtn">Feedback</a>
     <a href="#" id="donateBtn">Donate</a>
 </div>
 
-<!-- PC Download Page -->
+<!-- Download Page -->
 <div class="page">
-    <h2>🔥 PromptYT Downloader (Windows Only) 🔥</h2>
+    <h2>🔥 PromptYT Downloader Downloads 🔥</h2>
     <div class="download-box">
-        <p><strong>PromptYTDownloader_by_Ovadragoz.zip (366MB)</strong> — <em>Latest Patched</em></p>
-
+        <p><strong>PromptYTDownloader_by_Ovadragoz.zip (366MB)</strong> — <em>Latest Patched (Windows)</em></p>
         <div class="toggle-header" onclick="toggleDescription()">▼ Show Description</div>
         <div class="toggle-content" id="descBox">
-            <p>Get the <strong>latest PromptYT Downloader</strong> for Windows — easy to use,  
-            fast downloads, and works for both video and audio!</p>
-
-            <h3>✨ Featured:</h3>
+            <p>Get the <strong>latest PromptYT Downloader</strong> for Windows or Android — easy to use, fast downloads, and works for both video and audio!</p>
+            <h3>✨ Features:</h3>
             <ul>
                 <li>✅ Supports multiple formats (MP4, MP3, FLAC)</li>
-                <li>✅ Simple click-and-go HTML interface</li>
+                <li>✅ Simple click-and-go interface</li>
                 <li>✅ Works offline after setup</li>
-                <li>✅ Includes step-by-step guide for beginners</li>
+                <li>✅ Step-by-step guide for beginners</li>
             </ul>
-
             <h3>⚡ How it works:</h3>
             <ol>
-                <li>Extract the zip file to your <strong>C:</strong> drive.</li>
+                <li>Extract the zip file to your <strong>C:</strong> drive (for PC users).</li>
                 <li>Open <code>PromptYT_Guide_By_Ovadragoz.html</code> inside the folder.</li>
                 <li>Paste a YouTube link and select your option.</li>
             </ol>
-
             <h3>🎯 Used For:</h3>
             <ul>
                 <li>✅ Downloading YouTube videos for offline use</li>
@@ -139,16 +178,12 @@ html, body {
                 <li>✅ Saving English subtitles</li>
                 <li>✅ Custom file naming + folder saving</li>
             </ul>
-
             <p><strong>📦 File Size:</strong> ~366MB</p>
             <p><strong>💻 Platform:</strong> Windows Only</p>
         </div>
-
         <div class="download-stats">
             👁️ Views: <span id="viewCount">0</span> ⬇️ Downloads: <span id="downloadCount">0</span>
         </div>
-
-        <!-- Local image + smaller button -->
         <a class="download-btn" href="https://mega.nz/file/7VcG3Aqa#krc4ZctaoAY2fI5PdPoMMjnEiXNDath4S7jggepFdVo" target="_blank" id="downloadLink">
             <img src="mega.png" alt="MEGA"> Download
         </a>
@@ -209,36 +244,21 @@ function toggleDescription(){
         header.innerHTML = "▲ Hide Description";
     }
 }
-</script>
-<script>
-async function updateCounter(type) {
-    let response = await fetch('data.json');
-    let data = await response.json();
 
-    if(type === "view") data.views++;
-    if(type === "download") data.downloads++;
-
-    // Show live counts
-    document.getElementById("viewCount").innerText = data.views;
-    document.getElementById("downloadCount").innerText = data.downloads;
-
-    // ⚠️ Saving back to file requires a server
-    // On GitHub Pages, JS can't overwrite JSON
-    // → need server or API to handle saving
-}
-
-// Count view when page loads
-updateCounter("view");
-
-// Count download when clicked
-document.getElementById("downloadBtn").addEventListener("click", ()=>{
-    updateCounter("download");
+// Dropdown click/touch support (for mobile)
+document.querySelector('.dropbtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    var dropdown = this.parentElement.querySelector('.dropdown-content');
+    dropdown.style.display = (dropdown.style.display === 'flex') ? 'none' : 'flex';
+    // Hide on click outside
+    document.addEventListener('click', function handler(ev) {
+        if (!dropdown.contains(ev.target) && ev.target !== e.target) {
+            dropdown.style.display = 'none';
+            document.removeEventListener('click', handler);
+        }
+    });
 });
 </script>
 
 </body>
 </html>
-
-
-
-
