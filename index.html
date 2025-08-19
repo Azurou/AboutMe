@@ -104,15 +104,19 @@ canvas#bg {
     margin:260px 0 0 50px;
     z-index:2;
     position:relative;
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
 }
 .youtube-embed {
-    margin-bottom:18px;
+    margin-bottom:0;
     background:#222;
     border:2px dotted #888;
     border-radius:12px;
     padding:16px;
     box-shadow:0 2px 12px rgba(0,0,0,0.25);
     width:fit-content;
+    display: inline-block;
 }
 .youtube-embed iframe {
     border-radius:10px;
@@ -120,8 +124,30 @@ canvas#bg {
     background:#222;
     display:block;
 }
+.bio-side-box {
+    background: #222;
+    border: 2px solid #888;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    padding: 18px 36px;
+    margin-left: 0;
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    max-width: 700px;
+    min-width: 400px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.bio-side-box h2 {
+    color: #ff7e05;
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+}
 .recent-videos {
     margin-top: 10px;
+    margin-left: 50px; /* Move the box a bit to the right */
 }
 .recent-videos h2 {
     color:#ff7e05;
@@ -148,6 +174,26 @@ canvas#bg {
     width:350px;
     height:240px;
     display:block;
+}
+/* Version label */
+.version-label {
+    position: fixed;
+    left: 18px;
+    bottom: 18px;
+    color: #fff;
+    font-family: 'Press Start 2P', 'Consolas', 'monospace';
+    font-size: 0.85rem;
+    opacity: 0.85;
+    letter-spacing: 0.5px;
+    z-index: 200;
+    pointer-events: none;
+    user-select: none;
+}
+@font-face {
+    font-family: 'Press Start 2P';
+    src: url('https://fonts.gstatic.com/s/pressstart2p/v12/e3t4euO8KNyE0bM6oKpFQpRP.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 </style>
 </head>
@@ -197,22 +243,33 @@ canvas#bg {
 
 <!-- YouTube Section -->
 <div class="youtube-section">
-    <!-- Featured YouTube Video (autoplay) -->
+    <!-- Featured YouTube Video (autoplay, looped) and Bio side by side -->
     <div class="youtube-embed">
         <iframe width="560" height="315" 
-            src="https://www.youtube.com/embed/O1Dcbp6LZyY?autoplay=1&mute=1&si=5EwTrSt3WIYKSXT7" 
+            src="https://www.youtube.com/embed/O1Dcbp6LZyY?autoplay=1&mute=1&loop=1&playlist=O1Dcbp6LZyY&si=5EwTrSt3WIYKSXT7" 
             title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen"></iframe>
     </div>
-    <!-- Recent Videos (manual update) -->
-    <div class="recent-videos">
-        <h2>Latest Videos</h2>
-        <div class="recent-videos-list">
-            <iframe src="https://www.youtube.com/embed/J8PyMg9p0hI?si=FbBeJwkiZFXW4l8h" frameborder="0" allowfullscreen></iframe>
-            <iframe src="https://www.youtube.com/embed/TtMiXWBRWKU?si=4aclJkifkYAg-5B_" frameborder="0" allowfullscreen></iframe>
-            <iframe src="https://www.youtube.com/embed/wvpCGYtSODM?si=MFZFtg4JiqwTYCd0" frameborder="0" allowfullscreen></iframe>
-            <iframe src="https://www.youtube.com/embed/jjLRVSWk_50?si=HhmEBbLsqYSnkMtZ" frameborder="0" allowfullscreen></iframe>
-        </div>
+    <div class="bio-side-box">
+        <h2>About Me</h2>
+        <p>✨ Welcome to my own page! ✨</p>
+        <p>📌 Most of my content:</p>
+        <ul style="margin:0 0 0 1.2em; padding:0; list-style:none;">
+            <li>🎬 Short video edits</li>
+            <li>🎮 Live streams</li>
+            <li>📝 Mixed style — often in <b>Melayu Sarawak</b> with a bit of English.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Recent Videos (manual update) -->
+<div class="recent-videos">
+    <h2>Latest Videos</h2>
+    <div class="recent-videos-list">
+        <iframe src="https://www.youtube.com/embed/J8PyMg9p0hI?si=FbBeJwkiZFXW4l8h" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/TtMiXWBRWKU?si=4aclJkifkYAg-5B_" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/wvpCGYtSODM?si=MFZFtg4JiqwTYCd0" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/jjLRVSWk_50?si=HhmEBbLsqYSnkMtZ" frameborder="0" allowfullscreen></iframe>
     </div>
 </div>
 
@@ -236,6 +293,9 @@ canvas#bg {
 <!-- Mute/Unmute Button -->
 <button id="muteBtn" title="Mute/Unmute Music">🔊</button>
 <audio id="bgMusic" src="8bitodoriko.mp3" loop></audio>
+
+<!-- Version label -->
+<div class="version-label">0.0.17 Version (2025/8)</div>
 
 <script>
 // Canvas background animation
