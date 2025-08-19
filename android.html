@@ -98,6 +98,26 @@ html, body {
         max-width: 350px;
     }
 }
+/* Mute Button */
+#muteBtn {
+    position:fixed; bottom:20px; right:30px;
+    background:rgba(30,30,30,0.95);
+    border:none; color:#fff; font-size:1.7rem;
+    border-radius:50%; width:48px; height:48px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.5);
+    cursor:pointer; z-index:100;
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.2s;
+}
+#muteBtn:hover { background:rgba(255,126,5,0.8); }
+.popup {
+    position:fixed; top:50px; left:50%;
+    transform:translateX(-50%);
+    background:rgba(30,30,30,0.95);
+    padding:20px; border-radius:8px;
+    box-shadow:0 0 20px rgba(255,255,255,0.3);
+    display:none; z-index:20; color:#fff;
+}
 </style>
 </head>
 <body>
@@ -129,15 +149,13 @@ html, body {
 </div>
 
 <!-- Popups -->
-<div class="popup" id="mainMenuPopup" style="display:none;position:fixed;top:50px;left:50%;transform:translateX(-50%);background:rgba(30,30,30,0.95);padding:20px;border-radius:8px;box-shadow:0 0 20px rgba(255,255,255,0.3);z-index:20;color:#fff;">
-    <p>Coming soon...</p>
-</div>
-<div class="popup" id="feedbackPopup" style="display:none;position:fixed;top:50px;left:50%;transform:translateX(-50%);background:rgba(30,30,30,0.95);padding:20px;border-radius:8px;box-shadow:0 0 20px rgba(255,255,255,0.3);z-index:20;color:#fff;">
-    <p>Send feedback to: <strong>murphy_uh123@yahoo.com</strong></p>
-</div>
-<div class="popup" id="donatePopup" style="display:none;position:fixed;top:50px;left:50%;transform:translateX(-50%);background:rgba(30,30,30,0.95);padding:20px;border-radius:8px;box-shadow:0 0 20px rgba(255,255,255,0.3);z-index:20;color:#fff;">
-    <p>Paypal: <strong>ovadragoz@gmail.com</strong></p>
-</div>
+<div class="popup" id="mainMenuPopup"><p>Coming soon...</p></div>
+<div class="popup" id="feedbackPopup"><p>Send feedback to: <strong>murphy_uh123@yahoo.com</strong></p></div>
+<div class="popup" id="donatePopup"><p>Paypal: <strong>ovadragoz@gmail.com</strong></p></div>
+
+<!-- Mute/Unmute Button and Music -->
+<button id="muteBtn" title="Mute/Unmute Music">🔊</button>
+<audio id="bgMusic" src="8bitodoriko.mp3" loop></audio>
 
 <script>
 // Popup toggle
@@ -162,6 +180,58 @@ document.querySelector('.dropbtn').addEventListener('click', function(e) {
         }
     });
 });
+
+// ====== Background Music Player ======
+const audio = document.getElementById('bgMusic');
+const muteBtn = document.getElementById('muteBtn');
+
+// Restore state from localStorage
+const musicKey = "murphyMusic";
+let musicData = {};
+try { musicData = JSON.parse(localStorage.getItem(musicKey)) || {}; } catch (e) {}
+
+function saveMusicState() {
+    musicData = {
+        time: audio.currentTime,
+        muted: audio.muted,
+        playing: !audio.paused
+    };
+    localStorage.setItem(musicKey, JSON.stringify(musicData));
+}
+
+function restoreMusicState() {
+    if(musicData.time) audio.currentTime = musicData.time;
+    audio.muted = !!musicData.muted;
+    muteBtn.textContent = audio.muted ? "🔇" : "🔊";
+}
+
+audio.volume = 0.1;
+restoreMusicState();
+
+function tryPlay() {
+    if(musicData.playing === false) return;
+    audio.play().catch(() => {
+        document.body.addEventListener('click', () => { audio.play(); }, { once: true });
+    });
+}
+tryPlay();
+
+muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+    saveMusicState();
+});
+audio.addEventListener('volumechange', () => {
+    muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+    saveMusicState();
+});
+audio.addEventListener('pause', saveMusicState);
+audio.addEventListener('play', saveMusicState);
+audio.addEventListener('timeupdate', () => {
+    if (!audio.paused) saveMusicState();
+});
+// Save state before leaving page
+window.addEventListener('beforeunload', saveMusicState);
 </script>
 </body>
 </html>
