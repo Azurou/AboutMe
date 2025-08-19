@@ -55,11 +55,18 @@ canvas#bg {
 .social-links { display:flex; flex-wrap:wrap; gap:12px; margin-top:12px; }
 .social-links a {
     display:flex; align-items:center; gap:6px;
-    padding:6px 10px; background:rgba(0,0,0,0.6);
+    padding:8px 14px;
+    background:#222;
     color:#fff; text-decoration:none; font-weight:bold;
-    border-radius:4px; transition:0.2s;
+    border-radius:8px;
+    border:2px dotted #888;
+    transition:0.2s;
+    box-shadow:0 2px 8px rgba(0,0,0,0.15);
 }
-.social-links a:hover { background:rgba(255,255,255,0.15); }
+.social-links a:hover {
+    background:#444;
+    border-color:#ff7e05;
+}
 .social-links img { width:20px; height:20px; }
 .popup {
     position:fixed; top:50px; left:50%;
@@ -91,6 +98,57 @@ canvas#bg {
     transition:background 0.2s;
 }
 #muteBtn:hover { background:rgba(255,126,5,0.8); }
+
+/* YouTube Section */
+.youtube-section {
+    margin:260px 0 0 50px;
+    z-index:2;
+    position:relative;
+}
+.youtube-embed {
+    margin-bottom:18px;
+    background:#222;
+    border:2px dotted #888;
+    border-radius:12px;
+    padding:16px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.25);
+    width:fit-content;
+}
+.youtube-embed iframe {
+    border-radius:10px;
+    box-shadow:0 0 12px #222;
+    background:#222;
+    display:block;
+}
+.recent-videos {
+    margin-top: 10px;
+}
+.recent-videos h2 {
+    color:#ff7e05;
+    font-size:1.2rem;
+    margin-bottom:10px;
+}
+.recent-videos-list {
+    display:flex;
+    gap:20px;
+    background:#222;
+    border:2px dotted #888;
+    border-radius:12px;
+    padding:16px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.25);
+    width:fit-content;
+}
+.recent-videos-list iframe {
+    border-radius:7px;
+    box-shadow:0 0 8px #111;
+    background:#222;
+    border:none;
+    padding:0;
+    box-sizing:border-box;
+    width:350px;
+    height:240px;
+    display:block;
+}
 </style>
 </head>
 <body>
@@ -131,8 +189,29 @@ canvas#bg {
             <a href="https://www.tiktok.com/@murphyuhls" target="_blank"><img src="https://static.wikia.nocookie.net/tiktok/images/e/eb/TikTok_Logo.png" alt="TikTok">TikTok</a>
             <a href="https://www.instagram.com/pathobscure" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">Instagram</a>
             <a href="https://steamcommunity.com/id/mupyls/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam">Steam</a>
-            <a href="https://github.com/Azurou" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/2048px-Github-desktop-logo-symbol.svg.png" alt="Github">Github</a>
+            <a href="https://github.com/Azurou" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/2048px-Github-desktop-logo-symbol.svg.png" alt="GitHub">GitHub</a>
             <a href="https://www.deviantart.com/ovadragoz/" target="_blank"><img src="https://m.media-amazon.com/images/I/A19BO+c5nIL.png" alt="Deviantart">Deviantart</a>
+        </div>
+    </div>
+</div>
+
+<!-- YouTube Section -->
+<div class="youtube-section">
+    <!-- Featured YouTube Video (autoplay) -->
+    <div class="youtube-embed">
+        <iframe width="560" height="315" 
+            src="https://www.youtube.com/embed/O1Dcbp6LZyY?autoplay=1&mute=1&si=5EwTrSt3WIYKSXT7" 
+            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen"></iframe>
+    </div>
+    <!-- Recent Videos (manual update) -->
+    <div class="recent-videos">
+        <h2>Latest Videos</h2>
+        <div class="recent-videos-list">
+            <iframe src="https://www.youtube.com/embed/J8PyMg9p0hI?si=FbBeJwkiZFXW4l8h" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/TtMiXWBRWKU?si=4aclJkifkYAg-5B_" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/wvpCGYtSODM?si=MFZFtg4JiqwTYCd0" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/jjLRVSWk_50?si=HhmEBbLsqYSnkMtZ" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 </div>
@@ -239,7 +318,7 @@ document.getElementById('donateBtn').addEventListener('click', e => {
 // Background Music: autoplay, 30% volume, mute/unmute only
 const audio = document.getElementById('bgMusic');
 const muteBtn = document.getElementById('muteBtn');
-audio.volume = 0.1;
+audio.volume = 0.2;
 audio.muted = false;
 
 // Try to autoplay (may require user gesture on some browsers)
@@ -263,5 +342,3 @@ audio.addEventListener('volumechange', () => {
 </script>
 </body>
 </html>
-
-
