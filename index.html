@@ -378,8 +378,8 @@ document.getElementById('donateBtn').addEventListener('click', e => {
 // Background Music: autoplay, 30% volume, mute/unmute only
 const audio = document.getElementById('bgMusic');
 const muteBtn = document.getElementById('muteBtn');
-audio.volume = 0.2;
-audio.muted = false;
+audio.volume = 0.1;
+audio.muted = true;
 
 // Try to autoplay (may require user gesture on some browsers)
 function tryPlay() {
@@ -402,3 +402,4 @@ audio.addEventListener('volumechange', () => {
 </script>
 </body>
 </html>
+
