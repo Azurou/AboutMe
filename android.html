@@ -3,176 +3,335 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Android Download - Murphy</title>
+<title>Android Subsystem - Murphy</title>
 <style>
-html, body {
-    margin: 0; padding: 0; height: 100%;
-    font-family: "Consolas","Segoe UI",monospace;
-    background: #000; color: #e0e0e0;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+@font-face {
+    font-family: 'Press Start 2P';
+    src: url('https://fonts.gstatic.com/s/pressstart2p/v12/e3t4euO8KNyE0bM6oKpFQpRP.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #0b0b0b;
+    color: #f5f5f7;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Nothing Tech Dot Matrix Background */
+canvas#bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Minimalist Top Nav */
 .top-nav {
-    position: fixed; top: 0; width: 100%;
-    background: rgba(40,40,40,0.9);
-    display: flex; justify-content: center; gap: 2rem;
-    padding: 1rem 0; z-index: 10;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(11, 11, 11, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
-.top-nav a, .top-nav .dropbtn {
-    color: #fff; text-decoration: none;
-    font-weight: bold; font-size: 1.1rem;
-    transition: 0.2s;
+
+.brand {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.9rem;
+    letter-spacing: -1px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.nav-links a, .nav-links .dropbtn {
+    color: #86868b;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
-    margin: 0;
     font-family: inherit;
+    transition: color 0.3s ease;
 }
-.top-nav a:hover, .top-nav .dropbtn:hover { color: #ff7e05; }
-.top-nav .dropdown {
-    position: relative;
-    display: inline-block;
+
+.nav-links a:hover, .nav-links .dropbtn:hover {
+    color: #fff;
 }
-.top-nav .dropdown-content {
+
+.nav-item { position: relative; }
+.dropdown-content {
     display: none;
     position: absolute;
-    top: 2.8rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(40,40,40,0.98);
-    min-width: 120px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    border-radius: 5px;
-    z-index: 100;
-    flex-direction: column;
+    top: 2rem;
+    right: 0;
+    background: #121212;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    min-width: 140px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-.top-nav .dropdown-content a {
-    color: #fff;
-    padding: 10px 18px;
-    text-decoration: none;
+
+.dropdown-content a {
     display: block;
-    font-size: 1rem;
-    white-space: nowrap;
-    transition: background 0.15s;
+    padding: 0.6rem 1.2rem;
+    color: #86868b;
+    font-size: 0.85rem;
 }
-.top-nav .dropdown-content a:hover {
-    background: #222;
-    color: #ff7e05;
+
+.dropdown-content a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
 }
-.top-nav .dropdown:hover .dropdown-content,
-.top-nav .dropdown:focus-within .dropdown-content {
-    display: flex;
-}
+
+/* Page Architecture */
 .page {
-    padding: 100px 20px 40px 20px;
-    max-width: 800px;
-    margin: auto;
-    line-height: 1.6;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
 }
-.page h2 { color: #ff7e05; }
+
+.page h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-left: 2px solid #ff7e05;
+    padding-left: 12px;
+}
+
+/* Product Matrix Grid */
 .box-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 120px);
-    gap: 1.5rem;
-    justify-items: center;
-    align-items: center;
-    margin: 3rem auto 0 auto;
-    max-width: 500px;
+    gap: 2rem;
+    margin-top: 2rem;
 }
+
 .blank-box {
-    width: 100px; height: 100px;
-    background: rgba(30,30,30,0.85);
-    border: 2px dashed #444;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2.2rem; color: #ff7e05;
-    transition: border 0.2s;
+    background: rgba(22, 22, 23, 0.6);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #86868b;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    text-align: center;
 }
+
+.blank-box::before {
+    content: '+';
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.2);
+    transition: color 0.3s;
+}
+
 .blank-box:hover {
-    border: 2px solid #ff7e05; background:rgba(50,50,50,0.85);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.02);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.blank-box:hover::before {
+    color: #ff7e05;
+}
+
+@media (max-width: 900px) {
+    .box-grid { grid-template-columns: repeat(2, 1fr); }
+    .top-nav { padding: 1.5rem 2rem; }
 }
 @media (max-width: 600px) {
-    .box-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: repeat(3, 100px);
-        max-width: 350px;
-    }
+    .box-grid { grid-template-columns: 1fr; }
 }
-/* Mute Button */
-#muteBtn {
-    position:fixed; bottom:20px; right:30px;
-    background:rgba(30,30,30,0.95);
-    border:none; color:#fff; font-size:1.7rem;
-    border-radius:50%; width:48px; height:48px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.5);
-    cursor:pointer; z-index:100;
-    display:flex; align-items:center; justify-content:center;
-    transition:background 0.2s;
-}
-#muteBtn:hover { background:rgba(255,126,5,0.8); }
+
+/* Clean Popups UI */
 .popup {
-    position:fixed; top:50px; left:50%;
-    transform:translateX(-50%);
-    background:rgba(30,30,30,0.95);
-    padding:20px; border-radius:8px;
-    box-shadow:0 0 20px rgba(255,255,255,0.3);
-    display:none; z-index:20; color:#fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+    display: none;
+    z-index: 200;
+    width: 90%;
+    max-width: 450px;
+    backdrop-filter: blur(20px);
+}
+
+.popup h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.9rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.popup p { color: #86868b; font-size: 0.95rem; }
+
+/* Utilities */
+#muteBtn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
 }
 </style>
 </head>
 <body>
+
+<canvas id="bg"></canvas>
+
 <!-- Top Navigation -->
-<div class="top-nav">
-    <a href="index.html">Home</a>
-    <div class="dropdown">
-        <button class="dropbtn">Download ▾</button>
-        <div class="dropdown-content">
-            <a href="pc.html">PC</a>
-            <a href="android.html">Android</a>
+<header class="top-nav">
+    <a href="index.html" class="brand">MURPHY//</a>
+    <nav class="nav-links">
+        <div class="nav-item">
+            <button class="dropbtn">Downloads ▼</button>
+            <div class="dropdown-content">
+                <a href="pc.html">Windows PC</a>
+                <a href="android.html">Android APK</a>
+            </div>
         </div>
-    </div>
-    <a href="#" id="mainMenuBtn">Main Menu</a>
-    <a href="#" id="feedbackBtn">Feedback</a>
-    <a href="#" id="donateBtn">Donate</a>
-</div>
+        <a href="#" id="mainMenuBtn">Menu</a>
+        <a href="#" id="feedbackBtn">Feedback</a>
+        <a href="#" id="donateBtn">Donate</a>
+    </nav>
+</header>
 
-<div class="page">
-    <h2>📱 Android Page</h2>
+<main class="page">
+    <h2>📱 Android Ecosystem Modules</h2>
+    
     <div class="box-grid">
-        <div class="blank-box"></div>
-        <div class="blank-box"></div>
-        <div class="blank-box"></div>
-        <div class="blank-box"></div>
-        <div class="blank-box"></div>
-        <div class="blank-box"></div>
+        <div class="blank-box"><div>Performance Tweaks</div></div>
+        <div class="blank-box"><div>System Overlays</div></div>
+        <div class="blank-box"><div>Custom Packages</div></div>
+        <div class="blank-box"><div>Reserved Expansion</div></div>
+        <div class="blank-box"><div>Reserved Expansion</div></div>
+        <div class="blank-box"><div>Reserved Expansion</div></div>
     </div>
+</main>
+
+<!-- Unified Minimalist Popups -->
+<div class="popup" id="mainMenuPopup">
+    <h2>SYSTEM STATUS</h2>
+    <p>Modules are updating. Feature array coming online soon.</p>
+</div>
+<div class="popup" id="feedbackPopup">
+    <h2>DIRECT TRANSMISSION</h2>
+    <p>Send secure communication packets directly to: <strong style="color: #fff;">murphy_uh123@yahoo.com</strong></p>
+</div>
+<div class="popup" id="donatePopup">
+    <h2>SUPPORT PORTAL</h2>
+    <p>PayPal portal routing address:<br><strong style="color: #fff;">ovadragoz@gmail.com</strong></p>
 </div>
 
-<!-- Popups -->
-<div class="popup" id="mainMenuPopup"><p>Coming soon...</p></div>
-<div class="popup" id="feedbackPopup"><p>Send feedback to: <strong>murphy_uh123@yahoo.com</strong></p></div>
-<div class="popup" id="donatePopup"><p>Paypal: <strong>ovadragoz@gmail.com</strong></p></div>
-
-<!-- Mute/Unmute Button and Music -->
-<button id="muteBtn" title="Mute/Unmute Music">🔊</button>
+<!-- Music Player System Control -->
+<button id="muteBtn" title="Toggle audio stream">🔊</button>
 <audio id="bgMusic" src="8bitodoriko.mp3" loop></audio>
 
 <script>
-// Popup toggle
-function togglePopup(id){
-    const p=document.getElementById(id);
-    p.style.display = (p.style.display==='block') ? 'none' : 'block';
-}
-document.getElementById('mainMenuBtn').addEventListener('click', e=>{ e.preventDefault(); togglePopup('mainMenuPopup'); });
-document.getElementById('feedbackBtn').addEventListener('click', e=>{ e.preventDefault(); togglePopup('feedbackPopup'); });
-document.getElementById('donateBtn').addEventListener('click', e=>{ e.preventDefault(); togglePopup('donatePopup'); });
+// Nothing Tech Responsive Dot Matrix Interactive Background Engine
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let mouse = { x: undefined, y: undefined };
 
-// Dropdown click/touch support (for mobile)
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+window.addEventListener('mouseleave', () => { mouse.x = undefined; mouse.y = undefined; });
+resize();
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const dotSpacing = 30;
+    
+    for (let x = 15; x < canvas.width; x += dotSpacing) {
+        for (let y = 15; y < canvas.height; y += dotSpacing) {
+            let dist = 0;
+            let radius = 1;
+            
+            if(mouse.x !== undefined) {
+                let dx = mouse.x - x;
+                let dy = mouse.y - y;
+                dist = Math.sqrt(dx*dx + dy*dy);
+                if(dist < 120) {
+                    radius = Math.max(1, 3.5 - (dist / 40));
+                }
+            }
+            
+            ctx.fillStyle = dist < 120 && mouse.x !== undefined ? 'rgba(255,255,255,0.45)' : 'rgba(255, 255, 255, 0.08)';
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    requestAnimationFrame(animate);
+}
+animate();
+
+// Elegant Dropdown Triggers
 document.querySelector('.dropbtn').addEventListener('click', function(e) {
     e.preventDefault();
-    var dropdown = this.parentElement.querySelector('.dropdown-content');
-    dropdown.style.display = (dropdown.style.display === 'flex') ? 'none' : 'flex';
-    // Hide on click outside
+    const dropdown = this.parentElement.querySelector('.dropdown-content');
+    const isVisible = dropdown.style.display === 'block';
+    dropdown.style.display = isVisible ? 'none' : 'block';
+    
     document.addEventListener('click', function handler(ev) {
         if (!dropdown.contains(ev.target) && ev.target !== e.target) {
             dropdown.style.display = 'none';
@@ -181,11 +340,22 @@ document.querySelector('.dropbtn').addEventListener('click', function(e) {
     });
 });
 
-// ====== Background Music Player ======
+// Popups Interface Engine
+function togglePopup(id) {
+    const pop = document.getElementById(id);
+    const state = pop.style.display === 'block';
+    document.querySelectorAll('.popup').forEach(p => p.style.display = 'none');
+    pop.style.display = state ? 'none' : 'block';
+}
+
+document.getElementById('mainMenuBtn').addEventListener('click', e => { e.preventDefault(); togglePopup('mainMenuPopup'); setTimeout(() => document.getElementById('mainMenuPopup').style.display='none', 3000); });
+document.getElementById('feedbackBtn').addEventListener('click', e => { e.preventDefault(); togglePopup('feedbackPopup'); });
+document.getElementById('donateBtn').addEventListener('click', e => { e.preventDefault(); togglePopup('donatePopup'); });
+
+// ====== Audio Synchronization Layer ======
 const audio = document.getElementById('bgMusic');
 const muteBtn = document.getElementById('muteBtn');
 
-// Restore state from localStorage
 const musicKey = "murphyMusic";
 let musicData = {};
 try { musicData = JSON.parse(localStorage.getItem(musicKey)) || {}; } catch (e) {}
@@ -205,7 +375,7 @@ function restoreMusicState() {
     muteBtn.textContent = audio.muted ? "🔇" : "🔊";
 }
 
-audio.volume = 0.1;
+audio.volume = 0.15;
 restoreMusicState();
 
 function tryPlay() {
@@ -221,16 +391,11 @@ muteBtn.addEventListener('click', () => {
     muteBtn.textContent = audio.muted ? '🔇' : '🔊';
     saveMusicState();
 });
-audio.addEventListener('volumechange', () => {
-    muteBtn.textContent = audio.muted ? '🔇' : '🔊';
-    saveMusicState();
-});
+
+audio.addEventListener('volumechange', () => { muteBtn.textContent = audio.muted ? '🔇' : '🔊'; saveMusicState(); });
 audio.addEventListener('pause', saveMusicState);
 audio.addEventListener('play', saveMusicState);
-audio.addEventListener('timeupdate', () => {
-    if (!audio.paused) saveMusicState();
-});
-// Save state before leaving page
+audio.addEventListener('timeupdate', () => { if (!audio.paused) saveMusicState(); });
 window.addEventListener('beforeunload', saveMusicState);
 </script>
 </body>
