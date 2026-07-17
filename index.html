@@ -206,23 +206,64 @@ canvas#bg {
     padding-bottom: 2px;
 }
 
-/* Feature Video & Bio Split */
-.split-section {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 2.5rem;
+/* --- Interactive Slider Hub Layout --- */
+.slider-tabs-nav {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.75rem;
+}
+
+.tab-trigger {
+    background: none;
+    border: none;
+    color: #86868b;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+}
+
+.tab-trigger:hover, .tab-trigger.active {
+    color: #ff7e05;
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: rgba(22, 22, 23, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
     margin-bottom: 6rem;
 }
 
-@media(max-width: 900px) {
-    .split-section { grid-template-columns: 1fr; }
-    .hero-section { flex-direction: column; text-align: center; }
-    .top-nav { padding: 1.5rem 2rem; }
+.slider-track {
+    display: flex;
+    width: 300%; /* Three distinct nodes */
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.slide-node {
+    width: 33.333%;
+    padding: 2.5rem;
+    flex-shrink: 0;
+}
+
+/* Split structures inside slides */
+.split-slide-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2.5rem;
+    align-items: center;
 }
 
 .video-wrapper {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%;
     height: 0;
     border-radius: 16px;
     overflow: hidden;
@@ -231,31 +272,73 @@ canvas#bg {
 
 .video-wrapper iframe {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0; left: 0; width: 100%; height: 100%;
+}
+
+/* Hardware advertisement custom layout */
+.hardware-asset-box {
+    width: 100%;
+    height: 320px;
+    border-radius: 16px;
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hardware-asset-box img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+}
+
+.tech-specs-card {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px dashed rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 1.8rem;
+}
+
+.tech-specs-card h4 {
+    color: #ff7e05;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.tech-specs-card ul {
+    list-style: none;
+}
+
+.tech-specs-card li {
+    font-size: 0.88rem;
+    color: #86868b;
+    margin-bottom: 0.6rem;
+    line-height: 1.5;
+}
+
+.tech-specs-card b {
+    color: #fff;
 }
 
 .bio-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px dashed rgba(255,255,255,0.15);
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px dashed rgba(255,255,255,0.12);
     border-radius: 16px;
-    padding: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    padding: 2rem;
 }
 
-.bio-card ul {
-    list-style: none;
-    margin-top: 1rem;
-}
+.bio-card ul { list-style: none; }
+.bio-card li { color: #86868b; margin-bottom: 0.75rem; font-size: 0.95rem; }
 
-.bio-card li {
-    color: #86868b;
-    margin-bottom: 0.75rem;
-    font-size: 0.95rem;
+@media(max-width: 900px) {
+    .split-slide-layout { grid-template-columns: 1fr; }
+    .hero-section { flex-direction: column; text-align: center; }
+    .top-nav { padding: 1.5rem 2rem; }
+    .slider-track { width: 100%; display: block; }
+    .slide-node { width: 100%; display: none; }
+    .slide-node.active-mobile { display: block; }
 }
 
 /* Social Matrix Icons */
@@ -427,20 +510,70 @@ canvas#bg {
         </div>
     </section>
 
-    <!-- Media Feature Section -->
-    <h2 class="section-title">Featured Stream & Bio</h2>
-    <section class="split-section">
-        <div class="video-wrapper">
-            <!-- Corrected Embed URL Endpoint -->
-            <iframe src="https://www.youtube.com/embed/O1Dcbp6LZyY" title="Featured Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="bio-card">
-            <h3>About Me</h3>
-            <ul>
-                <li>🎬 <b>Focus:</b> Short dynamic motion edits</li>
-                <li>🎮 <b>Activity:</b> Real-time live broadcasting</li>
-                <li>📝 <b>Dialect:</b> Melayu Sarawak / English Mix</li>
-            </ul>
+    <!-- Dynamic Slider Hub Section -->
+    <h2 class="section-title">Interactive Development Node</h2>
+    
+    <div class="slider-tabs-nav">
+        <button class="tab-trigger active" onclick="switchNode(0)">01// FEATURED_STREAM</button>
+        <button class="tab-trigger" onclick="switchNode(1)">02// HARDWARE_LAB</button>
+        <button class="tab-trigger" onclick="switchNode(2)">03// INTEL_BIO</button>
+    </div>
+
+    <section class="slider-container">
+        <div class="slider-track" id="sliderTrack">
+            
+            <!-- NODE 01: Featured Stream -->
+            <div class="slide-node active-mobile">
+                <div class="split-slide-layout">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/O1Dcbp6LZyY" title="Featured Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="tech-specs-card">
+                        <h4>Broadcast Stream</h4>
+                        <ul>
+                            <li><b>Pipeline Host:</b> YouTube Primary Embed</li>
+                            <li><b>System Task:</b> Real-time dynamic motion rendering and broadcast feed telemetry.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NODE 02: Hardware Advertisement Module -->
+            <div class="slide-node">
+                <div class="split-slide-layout">
+                   <div class="hardware-asset-box">
+                            <!-- Looping MP4 Asset Integration -->
+                            <video src="powerbank.mp4" autoplay loop muted playsinline aria-label="Premium Powerbank Render Loop [In Development]"></video>
+                        </div>
+                    <div class="tech-specs-card">
+                        <h4>Premium Powerbank Architecture</h4>
+                        <p style="font-size: 0.75rem; color: #ff7e05; font-family: 'Press Start 2P'; margin-bottom: 0.8rem;">[STATUS: IN BLENDER DEV]</p>
+                        <ul>
+                            <li><b>Core Controller IC:</b> IP5356 Matrix Management</li>
+                            <li><b>Bus Layout:</b> 1x USB-A Output // 1x Type-C Output Only // 1x Type-C Bi-directional Input & Output</li>
+                            <li><b>Illumination Matrix:</b> Integrated High-Power 12V LED Deck + 4.4V LED Indicator Array mounted seamlessly above a premium leather top panel.</li>
+                            <li><b>Thermal Dynamics:</b> Premium Solid Aluminum Frame for current stabilization and direct structural dissipation to minimize efficiency loss from thermal throttling.</li>
+                            <li><b>Safety Isolation Architecture:</b> Integrated NTC safety thermal cut-out calculations. Dual-layer composite insulation tape layout prevents core heat transfer from the IC directly to the Li-Po cell structures.</li>
+                            <li><b>Telemetry UI:</b> Dedicated segmented LED display for real-time monitoring of the active battery cell pool. Dedicated thermal pads applied to both the 12V LED element and primary IC.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NODE 03: About Me Bio Card -->
+            <div class="slide-node">
+                <div class="split-slide-layout">
+                    <div class="bio-card" style="grid-column: 1 / -1;">
+                        <h3>User Diagnostics</h3>
+                        <ul>
+                            <li>🎬 <b>Focus:</b> Short dynamic motion edits</li>
+                            <li>🎮 <b>Activity:</b> Real-time live broadcasting</li>
+                            <li>📝 <b>Dialect:</b> Melayu Sarawak / English Mix</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -500,6 +633,28 @@ canvas#bg {
 <div class="version-label">V.0.0.18_SYS</div>
 
 <script>
+// Slider Node Transition Logic
+function switchNode(index) {
+    const track = document.getElementById('sliderTrack');
+    const triggers = document.querySelectorAll('.tab-trigger');
+    const nodes = document.querySelectorAll('.slide-node');
+    
+    // Desktop horizontal slide transform
+    track.style.transform = `translateX(-${index * 33.333}%)`;
+    
+    // Active styling triggers
+    triggers.forEach((trigger, idx) => {
+        if(idx === index) trigger.classList.add('active');
+        else trigger.classList.remove('active');
+    });
+
+    // Mobile fallback active class tracking
+    nodes.forEach((node, idx) => {
+        if(idx === index) node.classList.add('active-mobile');
+        else node.classList.remove('active-mobile');
+    });
+}
+
 // Nothing Tech Responsive Dot Matrix Interactive Background
 const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
