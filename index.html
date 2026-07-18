@@ -504,11 +504,6 @@ canvas#bg {
             <p>Niche application packages built for power users looking to expand native platform environments.</p>
             <a href="android.html" class="card-btn">Get APKs</a>
         </div>
-        <div class="card">
-            <h3>UI/UX Experiments</h3>
-            <p>Open-source web components leaning heavily into brutalist structures and stark minimal interfaces.</p>
-            <a href="https://github.com/Azurou" target="_blank" class="card-btn">View Repository</a>
-        </div>
     </section>
 
     <!-- Dynamic Slider Hub Section -->
@@ -682,7 +677,7 @@ function animate() {
             if(mouse.x !== undefined) {
                 let dx = mouse.x - x;
                 let dy = mouse.y - y;
-                dist = Math.sqrt(dx*dx + dy*dy);
+                let dist = Math.sqrt(dx*dx + dy*dy);
                 if(dist < 120) {
                     radius = Math.max(1, 3.5 - (dist / 40));
                 }
